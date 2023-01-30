@@ -1,4 +1,5 @@
 function Discussion({ obj }) {
+  // 각각의 게시물
   return (
     <li className="discussion__container">
       <div className="discussion__avatar--wrapper">

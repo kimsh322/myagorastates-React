@@ -1,15 +1,18 @@
 import DiscusstionsBox from "./Components/DiscussionsBox";
+import InputBox from "./Components/InputBox";
 import "./style.css";
 
 function App() {
   return (
-    <div>
+    <main>
       <h1>My Agora States</h1>
-      <section class="form__container">{/* 인풋박스자리 */}</section>
-      <section class="discussion__wrapper">
+      <section className="form__container">
+        <InputBox />
+      </section>
+      <section className="discussion__wrapper">
         <DiscusstionsBox />
       </section>
-    </div>
+    </main>
   );
 }
 
