@@ -1,4 +1,34 @@
-function InputBox() {
+import { useState } from "react";
+
+function InputBox({ discussion, setDiscussion }) {
+  const [msg, setMsg] = useState("");
+  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+  const handleChange = (e) => {
+    setMsg(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const obj = {
+      id: discussion.length,
+      createdAt: JSON.parse(JSON.stringify(new Date())),
+      title,
+      author: name,
+      avatarUrl: "img/defaultImg.png",
+      answer: null,
+      url: "#",
+      bodyHTML: msg,
+    };
+    setDiscussion([obj, ...discussion]);
+  };
+
   return (
     <form action="" method="get" className="form">
       <div className="form__input--wrapper">
@@ -9,6 +39,8 @@ function InputBox() {
             name="name"
             id="name"
             placeholder="이름"
+            value={name}
+            onChange={handleNameChange}
             required
           />
         </div>
@@ -19,6 +51,8 @@ function InputBox() {
             name="title"
             id="title"
             placeholder="제목"
+            value={title}
+            onChange={handleTitleChange}
             required
           />
         </div>
@@ -29,11 +63,17 @@ function InputBox() {
               id="story"
               name="story"
               placeholder="질문을 작성하세요"
+              value={msg}
+              onChange={handleChange}
               required
             ></textarea>
-            <div className="form__submit">
-              <input id="add-discussion" type="submit" value="submit" />
-            </div>
+            <div className="form__submit"></div>
+            <input
+              id="add-discussion"
+              type="submit"
+              value="submit"
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       </div>

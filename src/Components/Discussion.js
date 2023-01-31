@@ -1,4 +1,5 @@
 function Discussion({ obj }) {
+  const parsedDate = new Date(obj.createdAt).toLocaleString("ko-kr");
   // 각각의 게시물
   return (
     <li className="discussion__container">
@@ -13,7 +14,7 @@ function Discussion({ obj }) {
         <h2 className="discussion__title">
           <a href={obj.url}>{obj.title}</a>
         </h2>
-        <div className="discussion__information">{obj.createdAt}</div>
+        <div className="discussion__information">{parsedDate}</div>
       </div>
       <div className="discussion__answered">{obj.answer ? "🅅" : "🅇"}</div>
     </li>

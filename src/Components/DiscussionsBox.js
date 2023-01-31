@@ -1,10 +1,8 @@
 import Discussion from "./Discussion";
-import agoraStatesDiscussions from "../data";
 import { useState } from "react";
 import Pagination from "./Pagination";
 
-function DiscusstionsBox() {
-  const [discussion, setDiscussion] = useState(agoraStatesDiscussions); // discussion 상태
+function DiscusstionsBox({ discussion }) {
   const [page, setPage] = useState(1); // 현재 페이지 상태
   const limitDiscuss = 6; // 페이지당 글 개수
   const offset = (page - 1) * limitDiscuss; // 페이지의 첫 게시물 번호
