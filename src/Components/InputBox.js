@@ -4,6 +4,7 @@ function InputBox({ discussion, setDiscussion }) {
   const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
+  const [isTure, setIsTrue] = useState(true); // warning 메시지 상태
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -16,18 +17,33 @@ function InputBox({ discussion, setDiscussion }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const obj = {
-      id: discussion.length,
-      createdAt: JSON.parse(JSON.stringify(new Date())),
-      title,
-      author: name,
-      avatarUrl: "img/defaultImg.png",
-      answer: null,
-      url: "#",
-      bodyHTML: msg,
-    };
-    setDiscussion([obj, ...discussion]);
+    if (msg && name && title) {
+      // 객체 생성
+      const obj = {
+        id: discussion.length,
+        createdAt: JSON.parse(JSON.stringify(new Date())),
+        title,
+        author: name,
+        avatarUrl: "img/defaultImg.png",
+        answer: null,
+        url: "#",
+        bodyHTML: msg,
+      };
+
+      // 로컬 스토리지 등록 처리
+      const objJson = JSON.stringify(obj);
+      localStorage.setItem(Date.now(), objJson);
+
+      // 상태 변경
+      setDiscussion([obj, ...discussion]);
+      setName("");
+      setTitle(""); // 초기화
+      setMsg("");
+      setIsTrue(true);
+    } else setIsTrue(false);
   };
+
+  const warning = isTure ? "" : "appear";
 
   return (
     <form action="" method="get" className="form">
@@ -77,7 +93,7 @@ function InputBox({ discussion, setDiscussion }) {
           </div>
         </div>
       </div>
-      <div className="warning hide">이름, 제목, 질문을 작성하세요!</div>
+      <div className={`warning ${warning}`}>이름, 제목, 질문을 작성하세요!</div>
     </form>
   );
 }

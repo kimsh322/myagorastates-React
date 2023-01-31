@@ -176,4 +176,8 @@ a {
 }
 .warning {
   color: red;
+  display: none;
+}
+.warning.appear {
+  display: block;
 }
