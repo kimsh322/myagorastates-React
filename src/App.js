@@ -1,25 +1,37 @@
 import "./style.css";
 import DiscusstionsBox from "./Components/DiscussionsBox";
 import InputBox from "./Components/InputBox";
-import { useState } from "react";
-import agoraStatesDiscussions from "./data";
+import { useEffect, useState } from "react";
+// import agoraStatesDiscussions from "./data";
 
 function App() {
   // 로컬 스토리지 정렬
-  const originArr = JSON.parse(JSON.stringify(agoraStatesDiscussions));
   let localArr = [];
   for (let i = 0; i < localStorage.length; i++) {
     localArr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
   }
   localArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
+  const [discussion, setDiscussion] = useState([...localArr]);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/discussions")
+      .then((res) => res.json())
+      .then((res) => {
+        setDiscussion([...localArr, ...res]);
+      });
+    // eslint-disable-next-line
+  }, []);
+
   // 로컬 스토리지 클리어함수
   const clear = () => {
     localStorage.clear();
-    setDiscussion([...originArr]);
+    fetch("http://localhost:4000/discussions")
+      .then((res) => res.json())
+      .then((res) => {
+        setDiscussion(res);
+      });
   };
-
-  const [discussion, setDiscussion] = useState([...localArr, ...originArr]);
 
   return (
     <>
@@ -40,3 +52,20 @@ function App() {
 }
 
 export default App;
+
+// 더미데이터로 데이터 불러오는 코드
+// // 로컬 스토리지 정렬
+// const originArr = JSON.parse(JSON.stringify(agoraStatesDiscussions));
+// let localArr = [];
+// for (let i = 0; i < localStorage.length; i++) {
+//   localArr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+// }
+// localArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+
+// // 로컬 스토리지 클리어함수
+// const clear = () => {
+//   localStorage.clear();
+//   setDiscussion([...originArr]);
+// };
+
+// const [discussion, setDiscussion] = useState([...localArr, ...originArr]);

@@ -20,7 +20,7 @@ function InputBox({ discussion, setDiscussion }) {
     if (msg && name && title) {
       // 객체 생성
       const obj = {
-        id: discussion.length,
+        id: new Date(),
         createdAt: JSON.parse(JSON.stringify(new Date())),
         title,
         author: name,
